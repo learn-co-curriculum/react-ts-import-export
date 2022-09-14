@@ -8,8 +8,11 @@
 
 ## Introduction
 
-In this lesson, we'll discuss the `import` and `export` keywords and how they
-allow us to share JavaScript code across multiple files.
+In this lesson, we'll discuss the `import` and `export` keywords in more detail
+and how they allow us to share TypeScript code across multiple files.
+
+> **Note**: These keywords are _not_ TypeScript exclusive. They are included in 
+> vanilla JavaScript.
 
 ## Modular Code
 
@@ -48,9 +51,9 @@ not uncommon to see a React program file tree that looks something like this:
 ├── README.md
 ├── public
 └── src
-     ├── App.js
-     ├── ColoradoStateParks.js
-     └── index.js
+     ├── App.tsx
+     ├── ColoradoStateParks.tsx
+     └── index.tsx
 ```
 
 With our components separated in their own files, all we have to do is figure
@@ -88,7 +91,7 @@ variable from a file which we can then import in another file.
 For example:
 
 ```js
-// src/parks/howManyParks.js
+// src/parks/howManyParks.tsx
 
 function howManyParks() {
   console.log("42 parks!");
@@ -101,8 +104,7 @@ Once we've exported the variable, we can use the `import` keyword to access that
 variable in another file:
 
 ```jsx
-// src/ColoradoStateParks.js
-import React from "react";
+// src/ColoradoStateParks.tsx
 import howManyParks from "./parks/howManyParks";
 
 function ColoradoStateParks() {
@@ -115,9 +117,14 @@ function ColoradoStateParks() {
 The `export default` syntax allows us rename the exported variable to whatever
 we want when importing it:
 
+> **Note**: Can you figure out why this file has an extension of `.ts` instead
+> of `.tsx`? 
+> <details><summary>Click to reveal answer</summary>
+> <p>We're not using any JSX elements in the file.</p></details>
+
+
 ```jsx
-// src/ColoradoStateParks.js
-import React from "react";
+// src/ColoradoStateParks.tsx
 import aDifferentName from "./parks/howManyParks";
 
 function ColoradoStateParks() {
@@ -137,9 +144,7 @@ typically have just one React component per file, so it makes sense to use the
 `export default` syntax with React components, like so:
 
 ```jsx
-// src/parks/MesaVerde.js
-import React from "react";
-
+// src/parks/MesaVerde.tsx
 function MesaVerde() {
   return <h1>Mesa Verde National Park</h1>;
 }
@@ -151,8 +156,7 @@ Then, we can import the entire component into any other file in our application,
 using whatever naming convention that we see fit:
 
 ```jsx
-// src/ColoradoStateParks.js
-import React from "react";
+// src/ColoradoStateParks.tsx
 import MesaVerde from "./parks/MesaVerde";
 
 function ColoradoStateParks() {
@@ -184,7 +188,7 @@ is being exported, but the syntax above will also work.
 With named exports, we can export multiple variables from a file, like so:
 
 ```js
-// src/parks/RockyMountain.js
+// src/parks/RockyMountain.ts
 const trees = "Aspen and Pine";
 
 function wildlife() {
@@ -202,7 +206,7 @@ export { trees, wildlife };
 We can then `import` and use them in another file:
 
 ```js
-// src/ColoradoStateParks.js
+// src/ColoradoStateParks.tsx
 import { trees, wildlife } from "./parks/RockyMountain";
 
 console.log(trees);
@@ -215,7 +219,7 @@ wildlife();
 We can also write named exports next to the function definition:
 
 ```js
-// src/parks/RockyMountain.js
+// src/parks/RockyMountain.ts
 export const trees = "Aspen and Pine";
 
 export function wildlife() {
@@ -242,7 +246,7 @@ The `import * from` syntax imports all of the variables that have been exported
 from a given module. This syntax looks like:
 
 ```js
-// src/ColoradoStateParks.js
+// src/ColoradoStateParks.tsx
 import * as RMFunctions from "./parks/RockyMountain";
 
 console.log(RMFunctions.trees);
@@ -256,25 +260,25 @@ RMFunctions.elevation();
 ```
 
 In the example above, we're importing all the exported variables from file
-`RockyMountain.js` as properties on an object called `RMFunctions`. Since
+`RockyMountain.ts` as properties on an object called `RMFunctions`. Since
 `elevation` is not exported, trying to use that function will result in an
 error.
 
-We are using the **relative path** to navigate from `src/ColoradoStateParks.js`
-to `src/parks/RockyMountain.js`. Since our file structure looks like this:
+We are using the **relative path** to navigate from `src/ColoradoStateParks.tsx`
+to `src/parks/RockyMountain.ts`. Since our file structure looks like this:
 
 ```txt
 └── src
      ├── parks
-     |   ├── RockyMountain.js
-     |   ├── MesaVerde.js
-     |   └── howManyParks.js
-     ├── ColoradoStateParks.js
-     └── index.js
+     |   ├── RockyMountain.ts
+     |   ├── MesaVerde.tsx
+     |   └── howManyParks.ts
+     ├── ColoradoStateParks.tsx
+     └── index.tsx
 ```
 
-To get from `ColoradoStateParks.js` to `RockyMountain.js`, we can stay in the
-`src` directory, then navigate to `parks`, where we'll find `RockyMountain.js`.
+To get from `ColoradoStateParks.tsx` to `RockyMountain.ts`, we can stay in the
+`src` directory, then navigate to `parks`, where we'll find `RockyMountain.ts`.
 
 #### Importing Specific Variables
 
@@ -284,7 +288,7 @@ name, and use that variable within our file.
 We're able to reference the imported variable by its previously declared name:
 
 ```js
-// src/ColoradoStateParks.js
+// src/ColoradoStateParks.tsx
 import { trees, wildlife } from "./parks/RockyMountain";
 
 console.log(trees);
@@ -297,7 +301,7 @@ wildlife();
 We can also rename any or all of the variables inside of our `import` statement:
 
 ```js
-// src/ColoradoStateParks.js
+// src/ColoradoStateParks.tsx
 import {
   trees as parkTrees,
   wildlife as parkWildlife,
@@ -313,7 +317,7 @@ parkWildlife();
 #### Importing Node Modules
 
 ```jsx
-// src/ColoradoStateParks.js
+// src/ColoradoStateParks.tsx
 import React from "react";
 import howManyParks from "./parks/howManyParks";
 import MesaVerde from "./parks/MesaVerde";
@@ -331,9 +335,16 @@ export default function ColoradoStateParks() {
 Take a look at the first line of code in this file: `import React from 'react'`.
 Here, we are referencing the React library's default export. The React library
 is located inside of the `node_modules` directory, a specific folder in many
-Node projects that holds packages of third-party code. Any time we are using
-code from an npm package, we must also import it in whatever file we're using it
-in.
+Node projects that holds packages of third-party code. In most cases, any time 
+we are using code from an npm package, we must also import it in whatever file 
+we're using it in. 
+
+As we learned in a previous lesson, for React specifically, it's no longer
+necessary to import it from the package into our component files. You'll notice 
+it has been omitted from the `MesaVerde.tsx` file, for example. 
+
+However, in most other cases, you will likely have to import packages when using
+their code. 
 
 > **Note**: The ability to import packages from the `node_modules` directory is
 > made possible in projects created with `create-react-app` by a tool called
@@ -345,10 +356,10 @@ in.
 
 ## Conclusion
 
-The `import` and `export` keywords help keep our code modular, and use variables
-across different files. In addition to being able to `import` and `export`
-default functions, we can rename and alias `import`s. We can also reference
-external packages, like `react`, that installed in our project.
+The `import` and `export` keywords help keep our code modular, and allow us to 
+use variables across different files. In addition to being able to `import` and 
+`export` default functions, we can rename and alias `import`s. We can also 
+reference external packages, like `react`, that are installed in our project.
 
 > **Note**: The `import` and `export` keywords are relatively new features of
 > the JavaScript language, having gained full support in major browsers in 2018
