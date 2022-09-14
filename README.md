@@ -117,6 +117,12 @@ function ColoradoStateParks() {
 The `export default` syntax allows us rename the exported variable to whatever
 we want when importing it:
 
+> **Note**: Can you figure out why this file has an extension of `.ts` instead
+> of `.tsx`? 
+> <details><summary>Click to reveal answer</summary>
+> <p>We're not using any JSX elements in the file.</p></details>
+
+
 ```jsx
 // src/ColoradoStateParks.tsx
 import aDifferentName from "./parks/howManyParks";
@@ -254,7 +260,7 @@ RMFunctions.elevation();
 ```
 
 In the example above, we're importing all the exported variables from file
-`RockyMountain.js` as properties on an object called `RMFunctions`. Since
+`RockyMountain.ts` as properties on an object called `RMFunctions`. Since
 `elevation` is not exported, trying to use that function will result in an
 error.
 
@@ -264,11 +270,11 @@ to `src/parks/RockyMountain.ts`. Since our file structure looks like this:
 ```txt
 └── src
      ├── parks
-     |   ├── RockyMountain.js
-     |   ├── MesaVerde.js
-     |   └── howManyParks.js
-     ├── ColoradoStateParks.js
-     └── index.js
+     |   ├── RockyMountain.ts
+     |   ├── MesaVerde.tsx
+     |   └── howManyParks.ts
+     ├── ColoradoStateParks.tsx
+     └── index.tsx
 ```
 
 To get from `ColoradoStateParks.tsx` to `RockyMountain.ts`, we can stay in the
@@ -350,10 +356,10 @@ their code.
 
 ## Conclusion
 
-The `import` and `export` keywords help keep our code modular, and use variables
-across different files. In addition to being able to `import` and `export`
-default functions, we can rename and alias `import`s. We can also reference
-external packages, like `react`, that installed in our project.
+The `import` and `export` keywords help keep our code modular, and allow us to 
+use variables across different files. In addition to being able to `import` and 
+`export` default functions, we can rename and alias `import`s. We can also 
+reference external packages, like `react`, that are installed in our project.
 
 > **Note**: The `import` and `export` keywords are relatively new features of
 > the JavaScript language, having gained full support in major browsers in 2018
